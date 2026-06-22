@@ -1,10 +1,15 @@
 /* ==========================================================================
-    VARIABLES Y CONFIGURACIÓN MÓVIL NATIVA
+    CONFIGURACIÓN MAESTRA MÓVIL
    ========================================================================== */
 :root {
     --color-vino: #4A0E17;
-    --color-oro-viejo: #C5A059;
+    --color-oro-viejo: #C5A059;  /* CORRECCIÓN: antes "vieje" en una línea del CSS */
     --color-crema: #FDFBF7;
+
+    /* Fuentes */
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-cursiva: 'Great Vibes', cursive;
+    --font-cuerpo: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
 }
 
 * {
@@ -13,30 +18,40 @@
     padding: 0;
 }
 
-body, html {
-    width: 100%;
-    /* Usamos svh para evitar que las barras de navegación de Safari/Chrome rompan el fondo */
-    height: 100svh; 
-    font-family: 'Georgia', serif;
-    background-color: #111; /* Color de fondo exterior */
+/* MEJORA: overflow-y scroll para que el scroll funcione correctamente
+   en Safari iOS y otros navegadores móviles */
+html {
+    overflow-y: scroll;
+    /* MEJORA: scroll snap en el eje Y para que cada sección encaje perfectamente */
+    scroll-snap-type: y mandatory;
+    /* scroll-behavior smooth para navegadores que no soportan snap */
     scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    font-family: var(--font-display);
+    background-color: var(--color-crema);
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
 }
 
 /* ==========================================================================
-    OPTIMIZACIÓN DEL LIENZO DE LA TARJETA (PANTALLA DEL CELULAR)
+    SECCIONES — SCROLL SNAP
    ========================================================================== */
-section {
+.mobile-card-section {
     position: relative;
     width: 100%;
-    height: 100svh; /* Cada pantalla mide exactamente lo que mide el celular */
+    height: 100svh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    background-color: var(--color-crema);
+    /* MEJORA: cada sección se ancla al inicio del viewport al deslizar */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
-/* El marco se convierte en el esqueleto de la tarjeta móvil */
 .section-frame {
     position: absolute;
     top: 0;
@@ -44,194 +59,363 @@ section {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    max-width: 440px; /* Ancho perfecto para emular la proporción de un smartphone */
+    max-width: 440px;
     height: 100svh;
     pointer-events: none;
     z-index: 10;
-    
     background-image: url('img/FondoSinFondo.png');
-    background-size: 100% 100%; /* En celular obliga al marco a abrazar el borde de la pantalla */
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.95;
 }
 
-/* Contenedor elástico de los textos: Asegura el área segura de lectura */
 .section-content-container {
     position: relative;
     z-index: 20;
     width: 100%;
-    max-width: 360px; /* Margen interno de seguridad para que nada toque la filigrana */
+    max-width: 370px;
     height: 100svh;
-    /* Acolchado dinámico: arriba y abajo deja espacio para las curvas del marco */
-    padding: 15svh 25px 12svh 25px !important; 
-    text-align: center;
+    padding: 0 10px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Espaciadores base */
+.spacer-top    { height: 12svh; width: 100%; }
+.spacer-bottom { height: 12svh; width: 100%; }
+
+.center-content-flow {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between; /* Distribuye el contenido armónicamente de arriba a abajo */
+    justify-content: center;
+    flex-grow: 1;
 }
 
 /* ==========================================================================
-    FONDOS DE LAS SECCIONES
+    ÁREA DE SEGURIDAD
    ========================================================================== */
-.welcome-section {
-    background-color: var(--color-crema);
-}
-
-.location-section {
-    background-image: url('img/roma1.jpg');
-    background-size: cover;
-    background-position: center;
-}
-
-.dresscode-section {
-    background-color: var(--color-crema);
-}
-
-.closing-section {
-    background-color: #161616;
+.text-area-safe {
+    max-width: 240px !important;
+    margin: 0 auto;
+    justify-content: center !important;
+    padding-top: 14svh !important;
+    flex-grow: 1;
 }
 
 /* ==========================================================================
-    TIPOGRAFÍA OPTIMIZADA PARA AJUSTE PANTALLA TÁCTIL
+    ANIMACIÓN DE ENTRADA (fadeInUp)
+    Se activa por JavaScript via IntersectionObserver.
+    Si el usuario prefiere movimiento reducido, JS muestra todo sin animación.
+   ========================================================================== */
+.reveal-content {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.reveal-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+    PANTALLA 1: PORTADA PRINCIPAL
    ========================================================================== */
 .main-title-serif {
+    font-family: var(--font-cuerpo) !important;
     text-transform: uppercase !important;
     letter-spacing: 4px !important;
     color: #6a532b;
-    font-size: 1rem !important;
-    margin-bottom: 5px !important;
+    font-size: 0.75rem !important;
+    font-weight: 400 !important;
+    margin-bottom: 10px !important;
 }
 
+/* MEJORA: fuente cursiva elegante para los nombres principales */
 .names-cursive-main {
-    /* Reducido sutilmente para evitar cortes o saltos de línea feos en pantallas delgadas */
-    font-size: 2.8rem !important; 
+    font-family: var(--font-cursiva) !important;
+    font-size: 3rem !important;
     color: var(--color-vino);
     line-height: 1.2;
-    word-wrap: break-word;
+    margin-bottom: 10px !important;
 }
 
 .date-serif {
+    font-family: var(--font-display) !important;
     letter-spacing: 2px !important;
-    font-size: 0.9rem !important;
+    font-size: 0.85rem !important;
     color: #6a532b;
 }
 
-/* CONTADOR FLOTANTE MÓVIL */
 .countdown-container {
     display: flex !important;
     justify-content: center !important;
     gap: 15px !important;
-    margin: 20px 0 !important;
+    margin-top: 25px !important;
     width: 100%;
 }
 
 .countdown-box {
     position: relative;
-    padding: 0 5px !important;
     flex: 1;
+    text-align: center;
 }
 
 .countdown-box:not(:last-child)::after {
     content: '|';
     position: absolute;
     right: -10px;
-    top: 10%;
+    top: 5%;
     color: rgba(197, 160, 89, 0.3);
 }
 
 .countdown-number {
-    font-size: 1.6rem !important;
+    font-family: var(--font-display) !important;
+    font-size: 1.5rem !important;
     color: var(--color-vino) !important;
-    font-family: 'Garamond', 'Georgia', serif !important;
+    font-weight: 300;
 }
 
 .countdown-label {
-    font-size: 0.6rem !important;
-    letter-spacing: 1px !important;
+    font-family: var(--font-cuerpo) !important;
+    font-size: 0.55rem !important;
+    letter-spacing: 1.5px !important;
     text-transform: uppercase !important;
     color: #6a532b !important;
     display: block;
+    margin-top: 2px;
 }
 
 .scroll-instruction {
-    font-size: 0.6rem;
+    font-family: var(--font-cuerpo);
+    font-size: 0.55rem;
     letter-spacing: 2px;
     color: #6a532b;
-    opacity: 0.7;
-    animation: pulse 2s infinite;
+    margin-bottom: 7svh;
+    opacity: 0.6;
 }
 
 /* ==========================================================================
-    TARJETAS TRASLÚCIDAS (ADAPTADAS PARA LECTURA EN RUTA MÓVIL)
+    PANTALLA 2: PADRES
    ========================================================================== */
-.glass-reading-card {
-    background: rgba(253, 251, 247, 0.15) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    border-radius: 12px !important;
-    padding: 25px 20px !important;
-    width: 95%;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+.parents-block {
+    margin-bottom: 20px;
+    width: 100%;
 }
 
-.location-section .glass-reading-card h3 { color: #F7E7CE !important; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); font-size: 1.25rem; }
-.location-section .glass-reading-card p { color: #FDFBF7 !important; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); font-size: 0.9rem; line-height: 1.4; }
-
-.dresscode-section .glass-reading-card {
-    background: rgba(74, 14, 23, 0.03) !important;
-    border: 1px solid rgba(197, 160, 89, 0.2) !important;
+.parents-title {
+    font-family: var(--font-cuerpo);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #6a532b;
+    font-weight: 500;
+    margin-bottom: 5px;
 }
-.dresscode-section .glass-reading-card h3 { color: var(--color-vino) !important; font-size: 1.25rem; }
-.dresscode-section .glass-reading-card p { color: #444 !important; font-size: 0.9rem; }
-.dresscode-type { font-weight: bold; color: #6a532b !important; margin-bottom: 5px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
 
-.btn-location {
+.parents-names {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+/* ==========================================================================
+    ESTILOS GENERALES (TÍTULOS Y TEXTOS)
+   ========================================================================== */
+.section-title-elegant {
+    font-family: var(--font-display) !important;
+    font-size: 1.1rem !important;
+    color: var(--color-vino);
+    margin-bottom: 16px !important;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+    line-height: 1.4;
+    font-style: italic;
+}
+
+.body-text-elegant {
+    font-family: var(--font-cuerpo);
+    font-size: 0.82rem;
+    color: #555;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+.highlight-text-serif {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: #6a532b;
+    margin: 6px 0;
+    font-style: italic;
+}
+
+.hour-spacing {
+    margin-top: 4px;
+    margin-bottom: 22px;
+    font-weight: 500;
+    color: #6a532b;
+    letter-spacing: 1px;
+}
+
+/* CORRECCIÓN: estaba escrito --color-oro-vieje (typo) */
+.btn-action-gold {
     display: inline-block;
-    margin-top: 15px;
-    padding: 12px 24px; /* Área táctil más grande para el dedo */
+    padding: 12px 22px;          /* MEJORA: min 48px de alto táctil */
+    min-height: 48px;
     border: 1px solid var(--color-oro-viejo);
-    color: #FDFBF7;
+    color: var(--color-vino);
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    background: rgba(74, 14, 23, 0.7);
+    font-family: var(--font-cuerpo);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    background: transparent;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* MEJORA: feedback táctil suave */
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-action-gold:active {
+    background-color: var(--color-oro-viejo);
+    color: var(--color-crema);
 }
 
 /* ==========================================================================
-    TARJETA DE CIERRE MÓVIL
+    PANTALLA 4: VESTIMENTA
    ========================================================================== */
-.end-card-box {
-    background: radial-gradient(circle, rgba(74, 14, 23, 0.96) 30%, rgba(35, 5, 10, 0.8) 100%) !important;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 1px solid rgba(197, 160, 89, 0.2) !important;
-    padding: 35px 20px !important;
-    border-radius: 12px !important;
-    width: 95%;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
+.dresscode-subtitle {
+    font-family: var(--font-cuerpo);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: #6a532b;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    margin-bottom: 14px;
 }
 
-.end-card-box .names-cursive {
-    color: #F7E7CE !important;
-    font-size: 2.3rem !important;
-    margin-bottom: 8px !important;
+.dresscode-photo-frame {
+    width: 100px;
+    height: 130px;
+    border: 1px solid var(--color-oro-viejo);
+    padding: 4px;
+    background-color: #fff;
+    margin: 0 auto 14px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dresscode-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dresscode-note {
+    font-family: var(--font-cuerpo);
+    font-size: 0.78rem;
+    color: #666;
+    font-weight: 300;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+    PANTALLA 5: CIERRE
+   ========================================================================== */
+.end-card-box-subtle {
+    width: 100%;
+    max-width: 240px;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-align: center;
+}
+
+/* MEJORA: fuente cursiva para el cierre */
+.names-cursive-end {
+    font-family: var(--font-cursiva) !important;
+    color: var(--color-vino) !important;
+    font-size: 2.4rem !important;
+    margin-bottom: 6px !important;
 }
 
 .closing-thank-you {
-    color: #FDFBF7;
-    font-size: 0.85rem;
+    font-family: var(--font-cuerpo);
+    color: #6a532b;
+    font-size: 0.78rem;
+    font-weight: 300;
     letter-spacing: 1px;
-    opacity: 0.9;
+    margin-bottom: 24px;
 }
 
-/* EFECTO ANIMACIÓN SUTIL */
-@keyframes pulse {
-    0% { transform: translateY(0); opacity: 0.6; }
-    50% { transform: translateY(4px); opacity: 0.9; }
-    100% { transform: translateY(0); opacity: 0.6; }
+.interaction-buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    align-items: center;
+}
+
+/* MEJORA: min-height 48px en todos los botones para área táctil cómoda */
+.btn-interaction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 0;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: var(--font-cuerpo);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    border-radius: 4px;
+    text-align: center;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.btn-interaction:active {
+    opacity: 0.85;
+    transform: scale(0.98);
+}
+
+.button-vino {
+    background-color: var(--color-vino);
+    color: var(--color-crema);
+    border: 1px solid var(--color-vino);
+}
+
+.button-outline {
+    background-color: transparent;
+    color: var(--color-vino);
+    border: 1px solid var(--color-oro-viejo);
+}
+
+/* ==========================================================================
+    ACCESIBILIDAD — reduced motion
+    Si el usuario tiene configurado "reducir movimiento" en su dispositivo,
+    las animaciones se desactivan completamente via CSS también.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .reveal-content {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    html {
+        scroll-behavior: auto;
+    }
 }

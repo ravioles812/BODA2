@@ -3,73 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4A0E17">
     <title>Invitación de Boda - Wendy y José</title>
+
+    <!-- Preload imagen del marco decorativo (se usa en todas las secciones) -->
+    <link rel="preload" as="image" href="img/FondoSinFondo.png">
+
+    <!-- Google Fonts: Cormorant Garamond para títulos y cursiva elegante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <section class="welcome-section">
+    <!-- SECCIÓN 1: PORTADA PRINCIPAL -->
+    <section class="mobile-card-section reveal-section">
         <div class="section-frame"></div>
         <div class="section-content-container">
-            <h1 class="main-title-serif">Nuestra Boda</h1>
-            
-            <div class="names-cursive-main">
-                Wendy & José
-            </div>
-            
-            <p class="date-serif">24 de Julio del 2027</p>
+            <div class="spacer-top"></div>
+            <div class="center-content-flow reveal-content">
+                <h1 class="main-title-serif">Nuestra Boda</h1>
+                <div class="names-cursive-main">Wendy &amp; José</div>
+                <p class="date-serif">24 de Julio del 2027</p>
 
-            <div class="countdown-container">
-                <div class="countdown-box">
-                    <span class="countdown-number">00</span>
-                    <span class="countdown-label">Días</span>
-                </div>
-                <div class="countdown-box">
-                    <span class="countdown-number">00</span>
-                    <span class="countdown-label">Horas</span>
-                </div>
-                <div class="countdown-box">
-                    <span class="countdown-number">00</span>
-                    <span class="countdown-label">Min</span>
+                <div class="countdown-container">
+                    <div class="countdown-box">
+                        <span class="countdown-number" id="cd-dias">--</span>
+                        <span class="countdown-label">Días</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-number" id="cd-horas">--</span>
+                        <span class="countdown-label">Horas</span>
+                    </div>
+                    <div class="countdown-box">
+                        <span class="countdown-number" id="cd-min">--</span>
+                        <span class="countdown-label">Min</span>
+                    </div>
                 </div>
             </div>
-
             <p class="scroll-instruction">DESLIZA PARA VER MÁS INFO</p>
         </div>
     </section>
 
-    <section class="location-section">
+    <!-- SECCIÓN 2: PADRES DE LOS NOVIOS -->
+    <section class="mobile-card-section reveal-section">
         <div class="section-frame"></div>
         <div class="section-content-container">
-            <div class="glass-reading-card">
-                <h3>¿Dónde y Cuándo?</h3>
-                <p>La ceremonia y recepción se llevarán a cabo en la Hacienda San Ángel.</p>
-                <p class="reception-hour">Recepción: 18:00 HRS</p>
-                <a href="#" class="btn-location">Ver Ubicación en Mapa</a>
+            <div class="spacer-top"></div>
+            <div class="center-content-flow text-area-safe reveal-content">
+                <h2 class="section-title-elegant">Con la bendición de nuestros padres</h2>
+
+                <div class="parents-block">
+                    <p class="parents-title">Padres de la Novia</p>
+                    <p class="parents-names">Nombre Padre Novia<br>Nombre Madre Novia</p>
+                </div>
+
+                <div class="parents-block">
+                    <p class="parents-title">Padres del Novio</p>
+                    <p class="parents-names">Nombre Padre Novio<br>Nombre Madre Novio</p>
+                </div>
             </div>
+            <div class="spacer-bottom"></div>
         </div>
     </section>
 
-    <section class="dresscode-section">
+    <!-- SECCIÓN 3: UBICACIÓN -->
+    <section class="mobile-card-section reveal-section">
         <div class="section-frame"></div>
         <div class="section-content-container">
-            <div class="glass-reading-card">
-                <h3>Código de Vestimenta</h3>
-                <p class="dresscode-type">Formal / Rigurosa Etiqueta</p>
-                <p>El color vino está reservado exclusivamente para las damas de honor.</p>
+            <div class="spacer-top"></div>
+            <div class="center-content-flow text-area-safe reveal-content">
+                <h2 class="section-title-elegant">¿Dónde y Cuándo?</h2>
+                <p class="body-text-elegant">La ceremonia y recepción se llevarán a cabo en la</p>
+                <p class="highlight-text-serif">Hacienda San Ángel</p>
+                <p class="body-text-elegant hour-spacing">Recepción: 18:00 HRS</p>
+                <!-- MEJORA: reemplaza LINK_GOOGLE_MAPS con la URL real de Google Maps -->
+                <a href="LINK_GOOGLE_MAPS" target="_blank" rel="noopener" class="btn-action-gold">Ver Ubicación en Mapa</a>
             </div>
+            <div class="spacer-bottom"></div>
         </div>
     </section>
 
-    <section class="closing-section">
+    <!-- SECCIÓN 4: CÓDIGO DE VESTIMENTA -->
+    <section class="mobile-card-section reveal-section">
         <div class="section-frame"></div>
         <div class="section-content-container">
-            <div class="end-card-box">
-                <div class="names-cursive">¡Te esperamos!</div>
-                <p class="closing-thank-you">Tu presencia es nuestro mejor regalo</p>
+            <div class="spacer-top"></div>
+            <div class="center-content-flow text-area-safe reveal-content">
+                <h2 class="section-title-elegant">Código de Vestimenta</h2>
+                <p class="dresscode-subtitle">Formal / Rigurosa Etiqueta</p>
+
+                <div class="dresscode-photo-frame">
+                    <img src="img/fotoVestimenta.jpeg" alt="Ejemplo de vestimenta formal" class="dresscode-img" loading="lazy">
+                </div>
+
+                <p class="body-text-elegant dresscode-note">El color vino está reservado exclusivamente para las damas de honor.</p>
             </div>
+            <div class="spacer-bottom"></div>
         </div>
     </section>
 
+    <!-- SECCIÓN 5: CIERRE -->
+    <section class="mobile-card-section reveal-section">
+        <div class="section-frame"></div>
+        <div class="section-content-container">
+            <div class="spacer-top"></div>
+            <div class="center-content-flow reveal-content">
+                <div class="end-card-box-subtle">
+                    <div class="names-cursive-end">¡Te esperamos!</div>
+                    <p class="closing-thank-you">Tu presencia es nuestro mejor regalo</p>
+
+                    <div class="interaction-buttons-group">
+                        <!-- MEJORA: reemplaza LINK_FORMULARIO con tu Google Form o WhatsApp -->
+                        <a href="LINK_FORMULARIO" target="_blank" rel="noopener" class="btn-interaction button-vino">Confirmar Asistencia</a>
+                        <!-- MEJORA: reemplaza LINK_MESA_REGALOS con el link de tu tienda -->
+                        <a href="LINK_MESA_REGALOS" target="_blank" rel="noopener" class="btn-interaction button-outline">Mesa de Regalos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="spacer-bottom"></div>
+        </div>
+    </section>
+
+    <script>
+        /* =====================================================
+            COUNTDOWN — Cuenta regresiva al 24 de julio de 2027
+        ===================================================== */
+        function padTwo(n) {
+            return String(n).padStart(2, '0');
+        }
+
+        function updateCountdown() {
+            var boda = new Date('2027-07-24T18:00:00');
+            var ahora = new Date();
+            var diff = boda - ahora;
+
+            if (diff <= 0) {
+                document.getElementById('cd-dias').textContent = '00';
+                document.getElementById('cd-horas').textContent = '00';
+                document.getElementById('cd-min').textContent = '00';
+                return;
+            }
+
+            var dias  = Math.floor(diff / (1000 * 60 * 60 * 24));
+            var horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var min   = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById('cd-dias').textContent  = padTwo(dias);
+            document.getElementById('cd-horas').textContent = padTwo(horas);
+            document.getElementById('cd-min').textContent   = padTwo(min);
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+
+        /* =====================================================
+            ANIMACIÓN DE ENTRADA — IntersectionObserver
+            (respeta prefers-reduced-motion)
+        ===================================================== */
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!prefersReduced) {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        var content = entry.target.querySelector('.reveal-content');
+                        if (content) {
+                            content.classList.add('visible');
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll('.reveal-section').forEach(function(section) {
+                observer.observe(section);
+            });
+        } else {
+            /* Sin animación: mostrar todo directamente */
+            document.querySelectorAll('.reveal-content').forEach(function(el) {
+                el.classList.add('visible');
+            });
+        }
+    </script>
 </body>
 </html>

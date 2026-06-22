@@ -3,138 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación de Boda - Wendy & José</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Invitación de Boda - Wendy y José</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <main class="invite-container container-fluid p-0">
-        
-        <section class="screen-section text-center portada-section">
-            <div class="vintage-double-border"></div>
+    <section class="welcome-section">
+        <div class="section-frame"></div>
+        <div class="section-content-container">
+            <h1 class="main-title-serif">Nuestra Boda</h1>
             
-            <header class="text-center animate-fade-in">
-                <div class="monogram">W & J</div>
-                <div class="vintage-divider"></div>
-            </header>
+            <div class="names-cursive-main">
+                Wendy & José
+            </div>
+            
+            <p class="date-serif">24 de Julio del 2027</p>
 
-            <div class="main-content animate-fade-in-delayed">
-                <h2 class="subtitle-vintage">NUESTRA BODA</h2>
-                <h1 class="names-cursive">Wendy & José</h1>
-                <p class="date-text mt-3">24 DE JULIO DEL 2027</p>
-                
-                <div class="countdown d-flex justify-content-center gap-2 my-4">
-                    <div class="countdown-item">
-                        <span id="days">00</span>
-                        <small>Días</small>
-                    </div>
-                    <div class="countdown-item">
-                        <span id="hours">00</span>
-                        <small>Horas</small>
-                    </div>
-                    <div class="countdown-item">
-                        <span id="minutes">00</span>
-                        <small>Min</small>
-                    </div>
+            <div class="countdown-container">
+                <div class="countdown-box">
+                    <span class="countdown-number">00</span>
+                    <span class="countdown-label">Días</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-number">00</span>
+                    <span class="countdown-label">Horas</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-number">00</span>
+                    <span class="countdown-label">Min</span>
                 </div>
             </div>
 
-            <div class="scroll-indicator">
-                <small class="text-uppercase">Desliza para ver más info</small>
-                <div class="arrow-down"></div>
+            <p class="scroll-instruction">DESLIZA PARA VER MÁS INFO</p>
+        </div>
+    </section>
+
+    <section class="location-section">
+        <div class="section-frame"></div>
+        <div class="section-content-container">
+            <div class="glass-reading-card">
+                <h3>¿Dónde y Cuándo?</h3>
+                <p>La ceremonia y recepción se llevarán a cabo en la Hacienda San Ángel.</p>
+                <p class="reception-hour">Recepción: 18:00 HRS</p>
+                <a href="#" class="btn-location">Ver Ubicación en Mapa</a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="screen-section text-center protocol-section">
-            <div class="vintage-double-border"></div>
-            
-            <div class="p-3 reveal-on-scroll">
-                <p class="vintage-phrase mb-5">
-                    "En compañía de nuestros padres, tenemos el honor de invitarte a la boda de..."
-                </p>
-                
-                <div class="row g-4 my-2">
-                    <div class="col-6">
-                        <h5 class="parent-title">Padres de la Novia</h5>
-                        <p class="parent-name">Nombre Padre N.<br>Nombre Madre N.</p>
-                    </div>
-                    <div class="col-6">
-                        <h5 class="parent-title">Padres del Novio</h5>
-                        <p class="parent-name">Nombre Padre N.<br>Nombre Madre N.</p>
-                    </div>
-                </div>
-
-                <div class="vintage-divider my-4"></div>
-
-                <div class="padrinos-container mt-4">
-                    <h4 class="subtitle-vintage mb-3">Nuestros Padrinos</h4>
-                    <p class="parent-name">Nombre Padrino & Nombre Madrina</p>
-                </div>
+    <section class="dresscode-section">
+        <div class="section-frame"></div>
+        <div class="section-content-container">
+            <div class="glass-reading-card">
+                <h3>Código de Vestimenta</h3>
+                <p class="dresscode-type">Formal / Rigurosa Etiqueta</p>
+                <p>El color vino está reservado exclusivamente para las damas de honor.</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="screen-section text-center location-section">
-            <div class="vintage-overlay"></div>
-            <div class="vintage-double-border"></div>
-            
-            <div class="position-relative z-index-2 reveal-on-scroll px-3">
-                <h2 class="subtitle-vintage text-white mb-4">¿DÓNDE Y CUÁNDO?</h2>
-                <p class="location-details">La ceremonia y recepción se llevarán a cabo en la Hacienda San Ángel.</p>
-                <p class="location-time mt-3">Recepción: 18:00 hrs</p>
-                
-                <a href="https://maps.app.goo.gl/uB7uayK67L8t1vAC7?g_st=aw" target="_blank" class="btn btn-vintage-gold mt-4">Ver Ubicación en Mapa</a>
+    <section class="closing-section">
+        <div class="section-frame"></div>
+        <div class="section-content-container">
+            <div class="end-card-box">
+                <div class="names-cursive">¡Te esperamos!</div>
+                <p class="closing-thank-you">Tu presencia es nuestro mejor regalo</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="screen-section text-center dresscode-section">
-            <div class="vintage-double-border"></div>
-            
-            <div class="reveal-on-scroll">
-                <h2 class="subtitle-vintage mb-3">CÓDIGO DE VESTIMENTA</h2>
-                <h4 class="dress-type mb-4" style="font-family: var(--fuente-vintage); font-size: 1.1rem; color: var(--color-vino);">FORMAL / TRAJE LARGO</h4>
-                
-                <div class="dress-code-img-wrapper mx-auto mb-4">
-                    <img src="img/fotoVestimenta.jpeg" alt="Código de vestimenta formal" class="w-100 h-100 object-fit-cover">
-                </div>
-                
-                <p class="parent-name px-3" style="font-family: var(--fuente-cuerpo); font-size: 0.85rem;">Agradecemos evitar el uso de color blanco y derivados.</p>
-            </div>
-        </section>
-
-        <section class="screen-section text-center end-section">
-            <div class="vintage-overlay"></div>
-            <div class="vintage-double-border"></div>
-            
-            <div class="end-card-box max-button-width w-100 position-relative z-index-2 reveal-on-scroll">
-                <h2 class="names-cursive mb-4" style="font-size: 3rem; margin: 0;">¡Te esperamos!</h2>
-                <div class="vintage-divider mb-4"></div>
-                
-                <div class="d-grid gap-3">
-                    <a href="#" class="btn btn-vintage">Confirmar Asistencia</a>
-                    <a href="#" class="btn btn-vintage-outline">Mesa de Regalos</a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { 
-            threshold: 0.1,
-            rootMargin: "0px" 
-        });
-
-        document.querySelectorAll('.screen-section').forEach((el) => observer.observe(el));
-    </script>
 </body>
 </html>

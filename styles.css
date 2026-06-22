@@ -1,438 +1,237 @@
 /* ==========================================================================
-   1. VARIABLES DE DISEÑO (COLORES Y FUENTES)
+    VARIABLES Y CONFIGURACIÓN MÓVIL NATIVA
    ========================================================================== */
 :root {
     --color-vino: #4A0E17;
-    --color-vino-light: #63141F;
-    --color-blanco-hueso: #FDFBF7;
-    --color-texto-oscuro: #332224;
-    --color-oro: #D4AF37;
-    --fuente-vintage: 'Cinzel', serif;
-    --fuente-cursiva: 'Great Vibes', cursive;
-    --fuente-cuerpo: 'Montserrat', sans-serif;
+    --color-oro-viejo: #C5A059;
+    --color-crema: #FDFBF7;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    width: 100%;
+    /* Usamos svh para evitar que las barras de navegación de Safari/Chrome rompan el fondo */
+    height: 100svh; 
+    font-family: 'Georgia', serif;
+    background-color: #111; /* Color de fondo exterior */
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* ==========================================================================
-   2. ESTILOS GENERALES Y CONTENEDOR MÓVIL
+    OPTIMIZACIÓN DEL LIENZO DE LA TARJETA (PANTALLA DEL CELULAR)
    ========================================================================== */
-body {
-    background-color: #121212;
-    font-family: var(--fuente-cuerpo);
-    color: var(--color-texto-oscuro);
-    margin: 0;
-}
-
-.invite-container {
-    background-color: var(--color-blanco-hueso);
-    max-width: 450px;
-    height: 100vh;
-    margin: 0 auto;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
-    overflow-y: scroll;
-    overflow-x: hidden;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-}
-
-.screen-section {
+section {
     position: relative;
     width: 100%;
-    height: 100vh;
-    min-height: 100vh;
-    scroll-snap-align: start;
-    flex-shrink: 0;
+    height: 100svh; /* Cada pantalla mide exactamente lo que mide el celular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* El marco se convierte en el esqueleto de la tarjeta móvil */
+.section-frame {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 440px; /* Ancho perfecto para emular la proporción de un smartphone */
+    height: 100svh;
+    pointer-events: none;
+    z-index: 10;
+    
+    background-image: url('img/FondoSinFondo.png');
+    background-size: 100% 100%; /* En celular obliga al marco a abrazar el borde de la pantalla */
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.95;
+}
+
+/* Contenedor elástico de los textos: Asegura el área segura de lectura */
+.section-content-container {
+    position: relative;
+    z-index: 20;
+    width: 100%;
+    max-width: 360px; /* Margen interno de seguridad para que nada toque la filigrana */
+    height: 100svh;
+    /* Acolchado dinámico: arriba y abajo deja espacio para las curvas del marco */
+    padding: 15svh 25px 12svh 25px !important; 
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    overflow: hidden; 
-    box-sizing: border-box;
-    padding: 80px 24px;
-}
-
-.main-content {
-    width: 100%;
-    max-width: 320px;
-    margin: auto 0;
-    text-align: center;
-    z-index: 5;
-}
-
-header.animate-fade-in {
-    position: absolute;
-    top: 40px;
-    width: 100%;
-    text-align: center;
-    z-index: 5;
+    justify-content: space-between; /* Distribuye el contenido armónicamente de arriba a abajo */
 }
 
 /* ==========================================================================
-   NUEVO MARCO DE ENCAJE VICTORIANO IMPERIAL (ALTA GAMA)
+    FONDOS DE LAS SECCIONES
    ========================================================================== */
-.vintage-double-border {
-    position: absolute;
-    top: 18px;
-    bottom: 18px;
-    left: 18px;
-    right: 18px;
-    pointer-events: none;
-    z-index: 10;
-    box-sizing: border-box;
-
-    /* Patrón de líneas entrelazadas y puntos estilo filigrana que recorre todo el borde */
-    border: 6px solid transparent;
-    border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M0,5 L30,5 M0,9 L30,9 M5,0 L5,30 M9,0 L9,30' fill='none' stroke='%23C5A059' stroke-width='0.8' opacity='0.4'/%3E%3Ccircle cx='15' cy='7' r='1.2' fill='%23C5A059'/%3E%3Ccircle cx='7' cy='15' r='1.2' fill='%23C5A059'/%3E%3C/svg%3E") 10 repeat;
-    opacity: 0.9;
+.welcome-section {
+    background-color: var(--color-crema);
 }
 
-/* El marco interior que genera el relieve y la profundidad */
-.vintage-double-border::before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    bottom: 4px;
-    left: 4px;
-    right: 4px;
-    /* Línea delgada interna de acento */
-    border: 1px solid rgba(197, 160, 89, 0.6);
-    box-sizing: border-box;
-}
-
-/* Esquinas de Orfebrería Compleja (Corona de hojas de acanto y espirales) */
-.vintage-double-border::after {
-    content: '';
-    position: absolute;
-    top: -12px;
-    bottom: -12px;
-    left: -12px;
-    right: -12px;
-    box-sizing: border-box;
-    pointer-events: none;
-
-    /* SVGs Barrocos con texturas orgánicas curvas y remates reales de invitación premium */
-    background-image: 
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,10 Q35,10 40,25 Q25,40 10,10 Z M15,15 Q45,20 35,45 Q20,35 15,15 Z M10,10 C20,30 30,20 50,25' fill='none' stroke='%23C5A059' stroke-width='1.3'/%3E%3Cpath d='M10,10 L50,10 M10,10 L10,50' fill='none' stroke='%23C5A059' stroke-width='1' opacity='0.7'/%3E%3Ccircle cx='50' cy='10' r='2' fill='%23C5A059'/%3E%3Ccircle cx='10' cy='50' r='2' fill='%23C5A059'/%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%23C5A059'/%3E%3C/svg%3E"), /* Arriba Izq */
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M90,10 Q65,10 60,25 Q75,40 90,10 Z M85,15 Q55,20 65,45 Q80,35 85,15 Z M90,10 C80,30 70,20 50,25' fill='none' stroke='%23C5A059' stroke-width='1.3'/%3E%3Cpath d='M90,10 L50,10 M90,10 L90,50' fill='none' stroke='%23C5A059' stroke-width='1' opacity='0.7'/%3E%3Ccircle cx='50' cy='10' r='2' fill='%23C5A059'/%3E%3Ccircle cx='90' cy='50' r='2' fill='%23C5A059'/%3E%3Ccircle cx='70' cy='30' r='1.5' fill='%23C5A059'/%3E%3C/svg%3E"), /* Arriba Der */
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,90 Q35,90 40,75 Q25,60 10,90 Z M15,85 Q45,80 35,55 Q20,65 15,85 Z M10,90 C20,70 30,80 50,75' fill='none' stroke='%23C5A059' stroke-width='1.3'/%3E%3Cpath d='M10,90 L50,90 M10,90 L10,55' fill='none' stroke='%23C5A059' stroke-width='1' opacity='0.7'/%3E%3Ccircle cx='50' cy='90' r='2' fill='%23C5A059'/%3E%3Ccircle cx='10' cy='55' r='2' fill='%23C5A059'/%3E%3Ccircle cx='30' cy='70' r='1.5' fill='%23C5A059'/%3E%3C/svg%3E"), /* Abajo Izq */
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M90,90 Q65,90 60,75 Q75,60 90,90 Z M85,85 Q55,80 65,55 Q80,65 85,85 Z M90,90 C80,70 70,80 50,75' fill='none' stroke='%23C5A059' stroke-width='1.3'/%3E%3Cpath d='M90,90 L50,90 M90,90 L90,55' fill='none' stroke='%23C5A059' stroke-width='1' opacity='0.7'/%3E%3Ccircle cx='50' cy='90' r='2' fill='%23C5A059'/%3E%3Ccircle cx='90' cy='55' r='2' fill='%23C5A059'/%3E%3Ccircle cx='70' cy='70' r='1.5' fill='%23C5A059'/%3E%3C/svg%3E"); /* Abajo Der */
-    
-    background-position: top left, top right, bottom left, bottom right;
-    background-size: 60px 60px; /* Tamaño prominente para que los detalles luzcan imponentes */
-    background-repeat: no-repeat;
-}
-
-/* ==========================================================================
-   4. TEXTOS Y TIPOGRAFÍAS
-   ========================================================================== */
-.names-cursive {
-    font-family: var(--fuente-cursiva);
-    font-size: 3.4rem;
-    color: var(--color-vino);
-    text-shadow: 1px 1px 2px rgba(74, 14, 23, 0.08);
-    margin: 15px 0;
-    line-height: 1.1;
-    white-space: nowrap;
-}
-
-.vintage-phrase {
-    font-family: var(--fuente-vintage);
-    font-size: 0.95rem;
-    color: var(--color-vino);
-    line-height: 1.8;
-    font-weight: 600;
-}
-
-.parent-title {
-    font-family: var(--fuente-vintage);
-    font-size: 0.75rem;
-    color: var(--color-vino);
-    letter-spacing: 1.5px;
-    font-weight: 700;
-}
-
-.parent-name {
-    font-family: var(--fuente-cursiva);
-    font-size: 1.7rem;
-    line-height: 1.2;
-    color: var(--color-texto-oscuro);
-    margin-top: 4px;
-}
-
-/* ==========================================================================
-   5. SECCIÓN UBICACIÓN
-   ========================================================================== */
 .location-section {
     background-image: url('img/roma1.jpg');
     background-size: cover;
     background-position: center;
 }
 
-.vintage-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(45, 8, 14, 0.88);
-    z-index: 1;
+.dresscode-section {
+    background-color: var(--color-crema);
 }
 
-.z-index-2 { z-index: 2; }
-
-.location-details {
-    font-family: var(--fuente-cuerpo);
-    font-size: 1.1rem;
-    color: #F7E7CE !important;
-    font-weight: 500;
-    line-height: 1.6;
+.closing-section {
+    background-color: #161616;
 }
 
-.location-time {
-    font-family: var(--fuente-vintage);
-    font-size: 0.95rem;
-    color: var(--color-blanco-hueso) !important;
-    letter-spacing: 1px;
+/* ==========================================================================
+    TIPOGRAFÍA OPTIMIZADA PARA AJUSTE PANTALLA TÁCTIL
+   ========================================================================== */
+.main-title-serif {
+    text-transform: uppercase !important;
+    letter-spacing: 4px !important;
+    color: #6a532b;
+    font-size: 1rem !important;
+    margin-bottom: 5px !important;
 }
 
-/* Vestimenta */
-.dress-code-img-wrapper {
-    width: 170px;
-    height: 230px;
-    border: 1px solid var(--color-vino);
-    padding: 5px;
-    background-color: #fff;
+.names-cursive-main {
+    /* Reducido sutilmente para evitar cortes o saltos de línea feos en pantallas delgadas */
+    font-size: 2.8rem !important; 
+    color: var(--color-vino);
+    line-height: 1.2;
+    word-wrap: break-word;
 }
 
-.placeholder-img {
+.date-serif {
+    letter-spacing: 2px !important;
+    font-size: 0.9rem !important;
+    color: #6a532b;
+}
+
+/* CONTADOR FLOTANTE MÓVIL */
+.countdown-container {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 15px !important;
+    margin: 20px 0 !important;
     width: 100%;
-    height: 100%;
-    background-color: #f4efeb;
+}
+
+.countdown-box {
+    position: relative;
+    padding: 0 5px !important;
+    flex: 1;
+}
+
+.countdown-box:not(:last-child)::after {
+    content: '|';
+    position: absolute;
+    right: -10px;
+    top: 10%;
+    color: rgba(197, 160, 89, 0.3);
+}
+
+.countdown-number {
+    font-size: 1.6rem !important;
+    color: var(--color-vino) !important;
+    font-family: 'Garamond', 'Georgia', serif !important;
+}
+
+.countdown-label {
+    font-size: 0.6rem !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    color: #6a532b !important;
+    display: block;
+}
+
+.scroll-instruction {
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: #6a532b;
+    opacity: 0.7;
+    animation: pulse 2s infinite;
+}
+
+/* ==========================================================================
+    TARJETAS TRASLÚCIDAS (ADAPTADAS PARA LECTURA EN RUTA MÓVIL)
+   ========================================================================== */
+.glass-reading-card {
+    background: rgba(253, 251, 247, 0.15) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 12px !important;
+    padding: 25px 20px !important;
+    width: 95%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.location-section .glass-reading-card h3 { color: #F7E7CE !important; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); font-size: 1.25rem; }
+.location-section .glass-reading-card p { color: #FDFBF7 !important; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); font-size: 0.9rem; line-height: 1.4; }
+
+.dresscode-section .glass-reading-card {
+    background: rgba(74, 14, 23, 0.03) !important;
+    border: 1px solid rgba(197, 160, 89, 0.2) !important;
+}
+.dresscode-section .glass-reading-card h3 { color: var(--color-vino) !important; font-size: 1.25rem; }
+.dresscode-section .glass-reading-card p { color: #444 !important; font-size: 0.9rem; }
+.dresscode-type { font-weight: bold; color: #6a532b !important; margin-bottom: 5px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+
+.btn-location {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 24px; /* Área táctil más grande para el dedo */
+    border: 1px solid var(--color-oro-viejo);
+    color: #FDFBF7;
+    text-decoration: none;
+    text-transform: uppercase;
     font-size: 0.7rem;
-    text-align: center;
+    letter-spacing: 2px;
+    background: rgba(74, 14, 23, 0.7);
+    border-radius: 4px;
 }
 
 /* ==========================================================================
-   6. NUEVO DISEÑO PREMIUM PARA LA ÚLTIMA PANTALLA (FUSIÓN ELEGANTE)
-   ========================================================================== */
-.end-section {
-    background-image: url('img/roma2.jpg');
-    background-size: cover;
-    background-position: center top;
-}
-
-/* Capa de transición avanzada: se difumina del crema de la invitación al vino profundo */
-.end-section .vintage-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, rgba(253, 251, 247, 0.3) 0%, rgba(45, 8, 14, 0.75) 40%, rgba(30, 5, 9, 0.96) 100%);
-    z-index: 1;
-}
-
-/* Contenedor flotante estilizado para las acciones de cierre */
-.end-card-box {
-    background-color: rgba(253, 251, 247, 0.96); /* Tarjeta color hueso limpia */
-    border: 1px solid var(--color-vino);
-    padding: 30px 20px;
-    border-radius: 2px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    margin-top: auto; /* Empuja la tarjeta hacia abajo de forma armónica */
-    margin-bottom: 20px;
-}
-
-/* Forzamos visibilidad absoluta del final */
-.screen-section:last-of-type,
-.screen-section:last-of-type .main-content {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-    visibility: visible !important;
-}
-
-/* ==========================================================================
-   7. BOTONES E COMPONENTES DE INTERFAZ
-   ========================================================================== */
-.btn-vintage {
-    background-color: var(--color-vino);
-    color: var(--color-blanco-hueso);
-    font-family: var(--fuente-vintage);
-    border: 1px solid var(--color-vino);
-    padding: 12px;
-    letter-spacing: 2px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-vintage:hover {
-    background-color: var(--color-vino-light);
-    color: #fff;
-}
-
-.btn-vintage-outline {
-    background-color: transparent;
-    color: var(--color-vino);
-    font-family: var(--fuente-vintage);
-    border: 1px solid var(--color-vino);
-    padding: 12px;
-    letter-spacing: 2px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-vintage-outline:hover {
-    background-color: var(--color-vino);
-    color: var(--color-blanco-hueso);
-}
-
-.btn-vintage-gold {
-    background-color: transparent;
-    color: #fff;
-    border: 1px solid #fff;
-    font-family: var(--fuente-vintage);
-    letter-spacing: 2px;
-    padding: 10px 20px;
-    font-size: 0.8rem;
-    transition: all 0.3s ease;
-}
-
-.btn-vintage-gold:hover {
-    background-color: #fff;
-    color: var(--color-vino);
-}
-
-.scroll-indicator {
-    position: absolute;
-    bottom: 40px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--color-vino);
-    font-size: 0.65rem;
-    letter-spacing: 2px;
-    z-index: 5;
-}
-
-.arrow-down {
-    width: 10px;
-    height: 10px;
-    border-right: 2px solid var(--color-vino);
-    border-bottom: 2px solid var(--color-vino);
-    transform: rotate(45deg);
-    animation: bounce 1.5s infinite;
-    margin-top: 5px;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0) rotate(45deg); }
-    50% { transform: translateY(5px) rotate(45deg); }
-}
-
-.monogram { font-family: var(--fuente-vintage); font-size: 1.8rem; color: var(--color-vino); letter-spacing: 3px; margin: 0 auto; }
-.vintage-divider { width: 80px; height: 1px; background-color: var(--color-vino); margin: 10px auto; }
-.subtitle-vintage { font-family: var(--fuente-vintage); font-size: 0.9rem; letter-spacing: 4px; color: var(--color-vino); line-height: 1.4; }
-.date-text { font-size: 0.9rem; letter-spacing: 2px; font-weight: 600; color: var(--color-vino); }
-
-.countdown-item { 
-    font-family: var(--fuente-vintage); 
-    background-color: rgba(74, 14, 23, 0.04); 
-    border: 1px solid rgba(74, 14, 23, 0.15); 
-    padding: 8px 12px; 
-    border-radius: 2px; 
-    min-width: 65px; 
-}
-.countdown-item span { display: block; font-size: 1.3rem; color: var(--color-vino); font-weight: bold; }
-.countdown-item small { font-family: var(--fuente-cuerpo); font-size: 0.6rem; text-transform: uppercase; }
-
-.max-button-width { max-width: 280px; margin: 0 auto; }
-
-/* ==========================================================================
-   8. ANIMACIONES Y REVELADO
-   ========================================================================== */
-.reveal-on-scroll {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.animate-fade-in { animation: fadeIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-.animate-fade-in-delayed { opacity: 0; animation: fadeIn 1s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards; }
-
-@keyframes fadeIn { 
-    from { opacity: 0; transform: translateY(12px); } 
-    to { opacity: 1; transform: translateY(0); } 
-}
-
-/* ==========================================================================
-   AJUSTE DE ANCHO Y TEXTO HORIZONTAL PARA LA TARJETA
+    TARJETA DE CIERRE MÓVIL
    ========================================================================== */
 .end-card-box {
-    background: radial-gradient(circle, rgba(74, 14, 23, 0.88) 60%, rgba(74, 14, 23, 0.3) 100%) !important;
+    background: radial-gradient(circle, rgba(74, 14, 23, 0.96) 30%, rgba(35, 5, 10, 0.8) 100%) !important;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    border: none !important; 
+    border: 1px solid rgba(197, 160, 89, 0.2) !important;
     padding: 35px 20px !important;
-    border-radius: 16px !important;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4) !important;
-    
-    /* Ampliamos el ancho máximo de la tarjeta para dar espacio horizontal */
-    max-width: 320px !important; 
-    width: 90% !important;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    border-radius: 12px !important;
+    width: 95%;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* Forzar las dos palabras en una sola línea horizontal */
 .end-card-box .names-cursive {
     color: #F7E7CE !important;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5) !important;
-    
-    /* Reducimos ligeramente el tamaño para asegurar que entre en pantallas móviles sin romperse */
-    font-size: 2.6rem !important; 
-    
-    /* Forzamos que se mantenga en una sola línea horizontal */
-    white-space: nowrap !important; 
-    width: auto;
-    display: inline-block;
-    text-align: center;
-    margin: 0 auto 15px auto !important;
+    font-size: 2.3rem !important;
+    margin-bottom: 8px !important;
 }
 
-/* Divisor interno adaptado */
-.end-card-box .vintage-divider {
-    background-color: #F7E7CE !important;
-    opacity: 0.5;
-    margin: 0 auto 24px auto !important;
-    width: 80px;
+.closing-thank-you {
+    color: #FDFBF7;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    opacity: 0.9;
 }
 
-/* Asegurar ancho completo y centrado de los botones */
-.end-card-box .d-grid {
-    width: 100%;
-    max-width: 240px; /* Un poco más angostos para estilizar la caja */
-    margin: 0 auto;
-}
-
-/* Botones internos */
-.end-card-box .btn-vintage {
-    background-color: #FDFBF7 !important;
-    color: var(--color-vino) !important;
-    border: 1px solid #FDFBF7 !important;
-    font-weight: 700;
-}
-
-.end-card-box .btn-vintage:hover {
-    background-color: #F7E7CE !important;
-    border-color: #F7E7CE !important;
-}
-
-.end-card-box .btn-vintage-outline {
-    background-color: transparent !important;
-    color: #FDFBF7 !important;
-    border: 1px solid rgba(253, 251, 247, 0.6) !important;
-}
-
-.end-card-box .btn-vintage-outline:hover {
-    background-color: rgba(253, 251, 247, 0.1) !important;
-    border-color: #FDFBF7 !important;
+/* EFECTO ANIMACIÓN SUTIL */
+@keyframes pulse {
+    0% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(4px); opacity: 0.9; }
+    100% { transform: translateY(0); opacity: 0.6; }
 }

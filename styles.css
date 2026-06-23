@@ -82,9 +82,9 @@ body {
     align-items: center;
 }
 
-/* Espaciadores base */
-.spacer-top    { height: 12svh; width: 100%; }
-.spacer-bottom { height: 12svh; width: 100%; }
+/* Espaciadores base — aumentados para que el contenido no choque con el marco */
+.spacer-top    { height: 18svh; width: 100%; }
+.spacer-bottom { height: 14svh; width: 100%; }
 
 .center-content-flow {
     width: 100%;
@@ -102,8 +102,40 @@ body {
     max-width: 240px !important;
     margin: 0 auto;
     justify-content: center !important;
-    padding-top: 14svh !important;
+    /* Aumentado para que el contenido quede en la zona central del marco */
+    padding-top: 6svh !important;
+    padding-bottom: 4svh !important;
     flex-grow: 1;
+}
+
+/* ==========================================================================
+    OFFSETS ESPECÍFICOS POR PANTALLA
+    Permite bajar el contenido de forma independiente en cada sección
+    sin afectar las que ya están bien posicionadas.
+   ========================================================================== */
+
+/* Pantalla 1 — Portada: empujar contenido hacia abajo dentro del marco */
+.offset-pantalla-1 {
+    margin-top: 6svh;
+}
+
+/* Pantalla 2 — Padres: bajar un poco más para centrarse en la zona ancha */
+.offset-pantalla-2 {
+    margin-top: 13svh;
+}
+
+.offset-pantalla-3 {
+    margin-top: 5svh;
+}
+
+/* Pantalla 4 — Vestimenta: separar del borde superior del marco */
+.offset-pantalla-4 {
+    margin-top: 10svh;
+}
+
+/* Pantalla 5 — Cierre: centrar en la zona amplia del marco */
+.offset-pantalla-5 {
+    margin-top: 10svh;
 }
 
 /* ==========================================================================
@@ -114,7 +146,7 @@ body {
 .reveal-content {
     opacity: 0;
     transform: translateY(18px);
-    transition: opacity 0.65s ease, transform 0.65s ease;
+    transition: opacity 0.65s ease, transform 0.75s ease;
 }
 
 .reveal-content.visible {

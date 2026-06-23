@@ -23,7 +23,7 @@
         <div class="section-frame"></div>
         <div class="section-content-container">
             <div class="spacer-top"></div>
-            <div class="center-content-flow reveal-content">
+            <div class="center-content-flow reveal-content offset-pantalla-1">
                 <h1 class="main-title-serif">Nuestra Boda</h1>
                 <div class="names-cursive-main">Wendy &amp; José</div>
                 <p class="date-serif">24 de Julio del 2027</p>
@@ -52,7 +52,7 @@
         <div class="section-frame"></div>
         <div class="section-content-container">
             <div class="spacer-top"></div>
-            <div class="center-content-flow text-area-safe reveal-content">
+            <div class="center-content-flow text-area-safe reveal-content offset-pantalla-2">
                 <h2 class="section-title-elegant">Con la bendición de nuestros padres</h2>
 
                 <div class="parents-block">
@@ -74,7 +74,7 @@
         <div class="section-frame"></div>
         <div class="section-content-container">
             <div class="spacer-top"></div>
-            <div class="center-content-flow text-area-safe reveal-content">
+            <div class="center-content-flow text-area-safe reveal-content offset-pantalla-3">
                 <h2 class="section-title-elegant">¿Dónde y Cuándo?</h2>
                 <p class="body-text-elegant">La ceremonia y recepción se llevarán a cabo en la</p>
                 <p class="highlight-text-serif">Hacienda San Ángel</p>
@@ -91,7 +91,7 @@
         <div class="section-frame"></div>
         <div class="section-content-container">
             <div class="spacer-top"></div>
-            <div class="center-content-flow text-area-safe reveal-content">
+            <div class="center-content-flow text-area-safe reveal-content offset-pantalla-4">
                 <h2 class="section-title-elegant">Código de Vestimenta</h2>
                 <p class="dresscode-subtitle">Formal / Rigurosa Etiqueta</p>
 
@@ -110,7 +110,7 @@
         <div class="section-frame"></div>
         <div class="section-content-container">
             <div class="spacer-top"></div>
-            <div class="center-content-flow reveal-content">
+            <div class="center-content-flow reveal-content offset-pantalla-5">
                 <div class="end-card-box-subtle">
                     <div class="names-cursive-end">¡Te esperamos!</div>
                     <p class="closing-thank-you">Tu presencia es nuestro mejor regalo</p>
@@ -160,6 +160,98 @@
         setInterval(updateCountdown, 60000);
 
         /* =====================================================
+            SWIPE SNAP — Navegación por deslizamiento táctil
+            Detecta el gesto con touch events y hace scroll
+            suave a la sección anterior o siguiente al soltar.
+            También funciona con la rueda del mouse en desktop.
+        ===================================================== */
+        (function () {
+            var sections = Array.from(document.querySelectorAll('.mobile-card-section'));
+            var currentIndex = 0;
+            var isScrolling = false;   // bloqueo para evitar saltos dobles
+            var COOLDOWN = 700;        // ms de espera entre transiciones
+
+            /* — Ir a una sección por índice — */
+            function goTo(index) {
+                if (index < 0 || index >= sections.length) return;
+                if (isScrolling) return;
+
+                isScrolling = true;
+                currentIndex = index;
+
+                sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                setTimeout(function () {
+                    isScrolling = false;
+                }, COOLDOWN);
+            }
+
+            /* — Actualizar el índice actual según posición real del scroll — */
+            function syncIndex() {
+                var mid = window.innerHeight / 2;
+                sections.forEach(function (sec, i) {
+                    var rect = sec.getBoundingClientRect();
+                    if (rect.top <= mid && rect.bottom > mid) {
+                        currentIndex = i;
+                    }
+                });
+            }
+
+            /* ---- TOUCH EVENTS (móvil) ---- */
+            var touchStartY = 0;
+            var touchStartX = 0;
+            var SWIPE_THRESHOLD = 40; // px mínimos para considerar un swipe intencional
+
+            document.addEventListener('touchstart', function (e) {
+                touchStartY = e.touches[0].clientY;
+                touchStartX = e.touches[0].clientX;
+            }, { passive: true });
+
+            document.addEventListener('touchend', function (e) {
+                var deltaY = touchStartY - e.changedTouches[0].clientY;
+                var deltaX = Math.abs(touchStartX - e.changedTouches[0].clientX);
+
+                /* Solo procesar si el movimiento es más vertical que horizontal */
+                if (Math.abs(deltaY) < SWIPE_THRESHOLD || deltaX > Math.abs(deltaY)) return;
+
+                syncIndex();
+
+                if (deltaY > 0) {
+                    goTo(currentIndex + 1); // swipe hacia arriba → siguiente
+                } else {
+                    goTo(currentIndex - 1); // swipe hacia abajo → anterior
+                }
+            }, { passive: true });
+
+            /* ---- WHEEL (desktop / trackpad) ---- */
+            document.addEventListener('wheel', function (e) {
+                e.preventDefault();
+                syncIndex();
+                if (e.deltaY > 0) {
+                    goTo(currentIndex + 1);
+                } else {
+                    goTo(currentIndex - 1);
+                }
+            }, { passive: false });
+
+            /* ---- TECLADO (flechas arriba/abajo) ---- */
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                    syncIndex();
+                    goTo(currentIndex + 1);
+                } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                    syncIndex();
+                    goTo(currentIndex - 1);
+                }
+            });
+
+            /* Inicializar en la primera sección al cargar */
+            window.addEventListener('load', function () {
+                goTo(0);
+            });
+        })();
+
+        /* =====================================================
             ANIMACIÓN DE ENTRADA — IntersectionObserver
             (respeta prefers-reduced-motion)
         ===================================================== */
@@ -176,13 +268,12 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.3 });
+            }, { threshold: 0.4 });
 
             document.querySelectorAll('.reveal-section').forEach(function(section) {
                 observer.observe(section);
             });
         } else {
-            /* Sin animación: mostrar todo directamente */
             document.querySelectorAll('.reveal-content').forEach(function(el) {
                 el.classList.add('visible');
             });
